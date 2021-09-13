@@ -60,11 +60,11 @@ describe ('<TodoContainer />', () => {
       ...todo,
     }));
     component = TestRenderer.create(
-        <RecoilRoot>
-          <TodoContainer 
+      <RecoilRoot>
+        <TodoContainer 
           todo={todosToDisplay}
-          />
-        </RecoilRoot>
+        />
+      </RecoilRoot>
     )
     const testInstance = component.root;
     expect(testInstance.findByType(TodoContainer).props.todo).toHaveLength(2)
@@ -75,11 +75,11 @@ describe ('<TodoContainer />', () => {
       ...todo,
     }));
     component = TestRenderer.create(
-        <RecoilRoot>
-          <TodoContainer 
+      <RecoilRoot>
+        <TodoContainer 
           todo={todosToDisplay}
-          />
-        </RecoilRoot>
+        />
+      </RecoilRoot>
     )
     const testInstance = component.root;
     expect(testInstance.findByType(TodoContainer).props.todo).toHaveLength(1)
