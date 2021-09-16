@@ -3,15 +3,13 @@ import { URL, fetchTodos } from "../../utils";
 import TodoContainer from "./TodoContainer";
 import axios from 'axios';
 import { RecoilRoot } from 'recoil';
-import { render} from '@testing-library/react';
-import TestRenderer from 'react-test-renderer';
+import { render, waitFor, within } from '@testing-library/react';
 
 import "babel-polyfill";
 
 jest.mock("axios");
 
 describe ('<TodoContainer />', () => {
-  let component;
   const todos = [
     {
       description: "take out the trash by 4 PM wednesday",
@@ -33,55 +31,30 @@ describe ('<TodoContainer />', () => {
     }
   ]
 
-  const incompleteTodos = todos.filter((todo) => (
-    todo.status === 'incomplete'
-  ));
-  const completeTodos = todos.filter((todo) => (
-    todo.status === 'complete'
-  ));
   test('todos API is successfully called on page load', async() => {
 
-    axios.get.mockResolvedValueOnce(todos);
-    const result = await fetchTodos();
-    expect(result).toEqual(todos);
-    expect(axios.get).toHaveBeenCalledWith(URL);
-  });
+    axios.get.mockResolvedValueOnce({data: todos});
 
-  test('todos API fails', async() => {
-    const message = "Network Error";
-    axios.get.mockRejectedValueOnce(new Error(message));
-    const result = await fetchTodos();
-    expect(axios.get).toHaveBeenCalledWith(URL);
-    expect(result).toEqual([]);
-  });
-
-  test('renders the incomplete column', async() => {    
-    const todosToDisplay = incompleteTodos.map((todo) => ({
-      ...todo,
-    }));
-    component = TestRenderer.create(
+    const { getByTestId } = render(
       <RecoilRoot>
-        <TodoContainer 
-          todo={todosToDisplay}
-        />
+        <TodoContainer />
       </RecoilRoot>
     )
-    const testInstance = component.root;
-    expect(testInstance.findByType(TodoContainer).props.todo).toHaveLength(2)
-  });
 
-  test('renders the complete column', async() => {    
-    const todosToDisplay = completeTodos.map((todo) => ({
-      ...todo,
-    }));
-    component = TestRenderer.create(
-      <RecoilRoot>
-        <TodoContainer 
-          todo={todosToDisplay}
-        />
-      </RecoilRoot>
-    )
-    const testInstance = component.root;
-    expect(testInstance.findByType(TodoContainer).props.todo).toHaveLength(1)
+    const incomplete = getByTestId('incomplete-column');
+    const complete = getByTestId('complete-column');
+
+    const incompleteToDo = await waitFor(() => (
+      within(incomplete).getByText(/go grocery shopping/)
+    ));
+
+    expect(incompleteToDo).toBeTruthy();
+
+    const completeToDo = await waitFor(() => (
+      within(complete).getByText(/take out trash/)
+    ));
+
+    expect(completeToDo).toBeTruthy();
+
   });
 })
