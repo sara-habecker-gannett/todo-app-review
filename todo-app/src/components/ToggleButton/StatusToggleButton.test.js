@@ -10,8 +10,8 @@ describe('<StatusToggleButton />', () => {
       onChangeStatus={mockCallBack}
       todoStatus={"incomplete"}
    />)
-    expect(getByText('Done')).toBeInTheDocument();
-    expect(getByText('Incomplete')).toBeInTheDocument();
+    expect(getByText('Done')).toBeTruthy();
+    expect(getByText('Incomplete')).toBeTruthy();
   })
 
   test('test click on complete, should return incomplete', () => {
