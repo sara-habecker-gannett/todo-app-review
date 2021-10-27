@@ -23,13 +23,15 @@ function TodoModal(props) {
 
   return (
     <div>
-      <Button onClick={handleOpen}>Edit Todo</Button>
+      <Button variant="contained" onClick={handleOpen}>Edit Todo</Button>
       <Modal
         open={open}
         onClose={handleClose}
         >
           <Box sx={style}>
             <Typography>
+              <Button variant="contained" onClick={handleClose}>Close</Button>
+              <br />
               {todoTitle}<br />
               {todoStatus}
             </Typography>
