@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import StatusToggleButton from '../ToggleButton/StatusToggleButton';
 import  { Card, CardContent, CardActions } from '@material-ui/core';
 import PropTypes from 'prop-types';
+import TodoModal from '../TodoModal/TodoModal';
 
 function TodoItem({ todo, onChangeStatus }) {
 
@@ -23,6 +24,9 @@ function TodoItem({ todo, onChangeStatus }) {
   return (
     <div data-testid="todo-item">
       <Card variant="outlined">
+        <TodoModal 
+          todo={todo}
+        />
         <CardContent align="center">
           {todo.title}: {todo.description} 
         </CardContent>
