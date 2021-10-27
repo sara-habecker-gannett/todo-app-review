@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import  { Button, Modal, Typography, Box } from '@material-ui/core';
+import  { Button, Modal, Typography, Box, TextField } from '@material-ui/core';
 import PropTypes from 'prop-types';
 
 const style = {
@@ -32,8 +32,8 @@ function TodoModal(props) {
             <Typography>
               <Button variant="contained" onClick={handleClose}>Close</Button>
               <br />
-              {todoTitle}<br />
-              {todoStatus}
+              <TextField label="Title" value={todoTitle}/><br />
+              <TextField value={todoStatus}/>
             </Typography>
           </Box>
 
