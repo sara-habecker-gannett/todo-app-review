@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import  { Button, Modal, Typography, Box, TextField } from '@material-ui/core';
+import React from 'react';
+import  { Modal, Typography, Box, TextField } from '@material-ui/core';
 import PropTypes from 'prop-types';
 
 const style = {
@@ -17,20 +17,20 @@ const style = {
 function TodoModal(props) {
   const todoTitle = props.todo.title
   const todoStatus = props.todo.status
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  // const [open, setOpen] = useState(false);
+  // const handleOpen = () => setOpen(true);
+  // const handleClose = () => setOpen(false);
 
   return (
-    <div>
-      <Button variant="contained" onClick={handleOpen}>Edit Todo</Button>
+    <>
+      {/* <Button variant="contained" onClick={handleOpen}>Edit Todo</Button> */}
       <Modal
-        open={open}
-        onClose={handleClose}
+        open={props.open}
+        // onClose={handleClose}
         >
           <Box sx={style}>
-            <Typography>
-              <Button variant="contained" onClick={handleClose}>Close</Button>
+            <Typography component={"span"}>
+              {/* <Button variant="contained" onClick={handleClose}>Close</Button> */}
               <br />
               <TextField label="Title" value={todoTitle}/><br />
               <TextField value={todoStatus}/>
@@ -38,12 +38,14 @@ function TodoModal(props) {
           </Box>
 
       </Modal>
-    </div>
+    </>
+
   )
 }
 
 TodoModal.propTypes = {
   todo: PropTypes.object.isRequired,
+  open: PropTypes.bool,
 };
 
 export default TodoModal;

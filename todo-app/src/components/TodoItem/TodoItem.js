@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import StatusToggleButton from '../ToggleButton/StatusToggleButton';
-import  { Card, CardContent, CardActions } from '@material-ui/core';
+import  { Card, CardContent, CardActions, Button } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import TodoModal from '../TodoModal/TodoModal';
 
@@ -21,11 +21,18 @@ function TodoItem({ todo, onChangeStatus }) {
     }
   };
 
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  // const handleClose = () => setOpen(false);
+
+
   return (
     <div data-testid="todo-item">
       <Card variant="outlined">
+        <Button onClick={handleOpen}>Update</Button>
         <TodoModal 
           todo={todo}
+          open={open}
         />
         <CardContent align="center">
           {todo.title}: {todo.description} 
